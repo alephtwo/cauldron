@@ -12,13 +12,15 @@ defmodule FlaskScraper.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :flask]]
+    [applications: [:logger, :flask, :timex]]
   end
 
   defp deps do
     [
       {:flask, github: "alephtwo/flask", ref: "162cbab1fb76d360a7ca2b6976f577c5b2ba612f"},
-      {:credo, "~> 0.4", only: [:dev, :test]}
+      {:timex, "~> 3.0"},
+      {:credo, "~> 0.4", only: [:dev, :test]},
+      {:tzdata, "== 0.1.8", override: true} # Required for escript timex
     ]
   end
 end
