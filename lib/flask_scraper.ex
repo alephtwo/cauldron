@@ -5,7 +5,16 @@ defmodule FlaskScraper do
   alias FlaskScraper.Scraper
 
   def main(_args) do
-    Scraper.scrape(1..100)
+    {finds, faults} =
+      1..100
+        |> Scraper.scrape
+        |> Enum.partition(fn {sym, _} -> sym == :ok end)
+
+    scraped = Enum.map(finds, fn {:ok, i} -> i end)
+    File.write("./scrape.json", Poison.encode!(scraped), [:binary])
+
+    errors = Enum.map(faults, fn {:error, err} -> err end)
+    File.write("./errors.json", Poison.encode!(errors), [:binary])
   end
 
   def rps, do: Application.get_env(:flask_scraper, :requests_per_second)
