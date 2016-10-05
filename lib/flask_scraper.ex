@@ -6,7 +6,7 @@ defmodule FlaskScraper do
 
   def main(_args) do
     {finds, faults} =
-      1..100
+      1..10_000
         |> Scraper.scrape
         |> Enum.partition(fn {sym, _} -> sym == :ok end)
 
@@ -23,4 +23,5 @@ defmodule FlaskScraper do
   def rph, do: Application.get_env(:flask_scraper, :requests_per_hour)
   def trps, do: div(rph, 3600)
   def gap_time, do: div(rps, trps)
+  def item_not_found, do: Application.get_env(:flask_scraper, :item_not_found)
 end

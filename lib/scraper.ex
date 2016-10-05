@@ -59,7 +59,10 @@ defmodule FlaskScraper.Scraper do
 
   defp wrap_error(%{id: _id, item: {:ok, item}}), do: {:ok, item}
   defp wrap_error(%{id: id, item: {:error, status}}) do
-    Logger.error "#{id} failed: #{inspect(status)}"
+    # Don't write out item not found
+    unless status == FlaskScraper.item_not_found do
+      Logger.error "#{id} failed: #{inspect(status)}"
+    end
     {:error, %{id: id, error: status}}
   end
 
