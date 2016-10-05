@@ -19,7 +19,7 @@ defmodule FlaskScraper.Scraper do
   end
 
   defp process_chunk(chunk) when is_list(chunk) do
-    start = :os.system_time(:milli_seconds)
+    start = Duration.from_erl(:os.timestamp)
 
     results =
       chunk
@@ -27,8 +27,11 @@ defmodule FlaskScraper.Scraper do
         |> Enum.map(&Task.async(fn -> process_subchunk(&1) end))
         |> Enum.map(&Task.await(&1))
 
-    finish = :os.system_time(:milli_seconds)
-    rate_limit = (FlaskScraper.gap_time * 1000) - (finish - start)
+    elapsed =
+      Duration.from_erl(:os.timestamp)
+      |> Duration.elapsed(start, :milliseconds)
+
+    rate_limit = (FlaskScraper.gap_time * 1000) - elapsed
     if rate_limit > 0 do
       Logger.debug "#{inspect(self)} sleeping for #{rate_limit}ms"
       :timer.sleep(rate_limit)
