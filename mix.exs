@@ -17,7 +17,7 @@ defmodule FlaskScraper.Mixfile do
 
   defp deps do
     [
-      {:flask, github: "alephtwo/flask", ref: "cf48f0ce05cbabaf01e529833b31abb5c11064b1"},
+      {:flask, github: "alephtwo/flask", ref: "c77523a63cd11a73ff491bc2924f00bdbc53ce63"},
       {:timex, "~> 3.0"},
       {:credo, "~> 0.4", only: [:dev, :test]},
       {:tzdata, "== 0.1.8", override: true} # Required for escript timex

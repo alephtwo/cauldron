@@ -43,8 +43,8 @@ defmodule FlaskScraper.Scraper do
   defp process_subchunk(subchunk) when is_list(subchunk) do
     responses =
       subchunk
-        |> Enum.map(&Flask.item(&1))
-        |> Enum.filter(fn r -> r != :error end)
+        |> Enum.map(fn id -> %{id: id, item: Flask.item(id)} end)
+        |> Enum.map(fn item -> wrap_error(item) end)
 
     log_finds(responses)
     responses
@@ -55,6 +55,12 @@ defmodule FlaskScraper.Scraper do
     chunk
       |> Enum.group_by(fn x -> rem(x, FlaskScraper.trps) end)
       |> Enum.map(fn {_, t} -> t end)
+  end
+
+  defp wrap_error(%{id: _id, item: {:ok, item}}), do: {:ok, item}
+  defp wrap_error(%{id: id, item: {:error, status}}) do
+    Logger.error "#{id} failed: #{inspect(status)}"
+    {:error, %{id: id, error: status}}
   end
 
   defp log_finds(responses) when is_list(responses) do
