@@ -6,4 +6,7 @@ config :flask_scraper,
   requests_per_second: 100,
   requests_per_hour: 36_000
 
+config :logger,
+  level: :info
+
 import_config "secrets.exs"
