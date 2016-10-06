@@ -5,7 +5,7 @@ defmodule FlaskScraper.Scraper do
   use Timex
   require Logger
 
-  def scrape(range) do
+  def scrape(model, range) do
     {:ok, eta} =
       Timex.now
       |> Timex.shift(seconds: div(Enum.count(range), FlaskScraper.trps))
@@ -14,17 +14,17 @@ defmodule FlaskScraper.Scraper do
 
     range
       |> Enum.chunk(FlaskScraper.rps, FlaskScraper.rps, [])
-      |> Enum.map(fn chunk -> process_chunk(chunk) end)
+      |> Enum.map(fn chunk -> process_chunk(model, chunk) end)
       |> List.flatten
   end
 
-  defp process_chunk(chunk) when is_list(chunk) do
+  defp process_chunk(model, chunk) when is_list(chunk) do
     start = Duration.from_erl(:os.timestamp)
 
     results =
       chunk
         |> thread_groups
-        |> Enum.map(&Task.async(fn -> process_subchunk(&1) end))
+        |> Enum.map(&Task.async(fn -> process_subchunk(model, &1) end))
         |> Enum.map(&Task.await(&1, 30_000))
 
     elapsed =
@@ -40,13 +40,13 @@ defmodule FlaskScraper.Scraper do
     results
   end
 
-  defp process_subchunk(subchunk) when is_list(subchunk) do
+  defp process_subchunk(model, subchunk) when is_list(subchunk) do
     responses =
       subchunk
-        |> Enum.map(fn id -> %{id: id, item: Flask.item(id)} end)
-        |> Enum.map(fn item -> wrap_error(item) end)
+        |> Enum.map(fn id -> %{id: id, item: model.get(id)} end)
+        |> Enum.map(fn item -> wrap_error(model, item) end)
 
-    log_finds(responses)
+    log_finds(model, responses)
     responses
   end
 
@@ -57,10 +57,10 @@ defmodule FlaskScraper.Scraper do
       |> Enum.map(fn {_, t} -> t end)
   end
 
-  defp wrap_error(%{id: _id, item: {:ok, item}}), do: {:ok, item}
-  defp wrap_error(%{id: id, item: {:error, status}}) do
+  defp wrap_error(_, %{id: _id, item: {:ok, item}}), do: {:ok, item}
+  defp wrap_error(model, %{id: id, item: {:error, status}}) do
     # Don't write out item not found
-    unless status == FlaskScraper.item_not_found do
+    unless status == model.not_found do
       Logger.error "#{id} failed: #{inspect(status)}"
     end
     {:error, %{id: id, error: status}}

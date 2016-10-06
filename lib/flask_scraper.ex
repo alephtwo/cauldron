@@ -14,9 +14,13 @@ defmodule FlaskScraper do
   end
 
   def main(_args) do
+    run(FlaskScraper.Item, 1..100)
+  end
+
+  def run(model, range) do
     {finds, faults} =
-      100_001..175_000
-        |> Scraper.scrape
+      model
+        |> Scraper.scrape(range)
         |> Enum.partition(fn {sym, _} -> sym == :ok end)
 
     scrapes = Enum.map(finds, fn {:ok, i} -> i end)
@@ -26,7 +30,7 @@ defmodule FlaskScraper do
       errors =
         faults
           |> Enum.map(fn {:error, err} -> err end)
-          |> Enum.filter(fn %{error: err, id: _id} -> err != item_not_found end)
+          |> Enum.filter(fn %{error: err, id: _} -> err != model.not_found end)
       File.write("./errors.json", Poison.encode!(errors), [:binary])
     end
   end
@@ -35,5 +39,4 @@ defmodule FlaskScraper do
   def rph, do: Application.get_env(:flask_scraper, :requests_per_hour)
   def trps, do: div(rph, 3600)
   def gap_time, do: div(rps, trps)
-  def item_not_found, do: Application.get_env(:flask_scraper, :item_not_found)
 end

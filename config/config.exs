@@ -4,8 +4,7 @@ use Mix.Config
 
 config :flask_scraper,
   requests_per_second: 100,
-  requests_per_hour: 36_000,
-  item_not_found: %{reason: "Unable to get item information.", status: "nok"}
+  requests_per_hour: 36_000
 
 config :flask_scraper,
   FlaskScraper.Repo,
