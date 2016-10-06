@@ -25,7 +25,7 @@ defmodule FlaskScraper.Scraper do
       chunk
         |> thread_groups
         |> Enum.map(&Task.async(fn -> process_subchunk(&1) end))
-        |> Enum.map(&Task.await(&1))
+        |> Enum.map(&Task.await(&1, 30_000))
 
     elapsed =
       Duration.from_erl(:os.timestamp)

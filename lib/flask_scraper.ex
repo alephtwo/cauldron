@@ -6,7 +6,7 @@ defmodule FlaskScraper do
 
   def main(_args) do
     {finds, faults} =
-      1..10_000
+      1..150_000
         |> Scraper.scrape
         |> Enum.partition(fn {sym, _} -> sym == :ok end)
 
@@ -14,7 +14,10 @@ defmodule FlaskScraper do
     File.write("./scrape.json", Poison.encode!(scrapes), [:binary])
 
     unless Enum.empty?(faults) do
-      errors = Enum.map(faults, fn {:error, err} -> err end)
+      errors =
+        faults
+          |> Enum.map(fn {:error, err} -> err end)
+          |> Enum.filter(fn %{error: err, id: _id} -> err != item_not_found end)
       File.write("./errors.json", Poison.encode!(errors), [:binary])
     end
   end
