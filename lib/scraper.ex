@@ -27,8 +27,8 @@ defmodule FlaskScraper.Scraper do
         |> Enum.map(&Task.async(fn -> process_subchunk(model, &1) end))
         |> Enum.map(&Task.await(&1, 30_000))
 
-    elapsed =
-      Duration.from_erl(:os.timestamp)
+    elapsed = :os.timestamp
+      |> Duration.from_erl
       |> Duration.elapsed(start, :milliseconds)
 
     rate_limit = (FlaskScraper.gap_time * 1000) - elapsed
