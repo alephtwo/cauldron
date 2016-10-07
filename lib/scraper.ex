@@ -66,11 +66,10 @@ defmodule FlaskScraper.Scraper do
     {:error, %{id: id, error: status}}
   end
 
-  defp log_finds(responses) when is_list(responses) do
+  defp log_finds(model, responses) when is_list(responses) do
     responses
       |> Enum.filter(fn {sym, _} -> sym == :ok end)
-      |> Enum.map(fn {:ok, r} -> Map.take(r, [:id, :name]) end)
-      |> Enum.map(fn r -> "#{Map.get(r, :id)} - #{Map.get(r, :name)}" end)
+      |> Enum.map(fn {:ok, item} -> model.describe(item) end)
       |> Enum.map(fn s -> "#{inspect(self)} #{s}" end)
       |> Enum.each(&Logger.info(&1))
   end

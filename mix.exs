@@ -14,23 +14,15 @@ defmodule FlaskScraper.Mixfile do
   end
 
   def application do
-    [applications: [
-      :logger,
-      :flask,
-      :timex,
-      :ecto,
-      :postgrex
-    ]]
+    [applications: [:logger, :flask, :timex]]
   end
 
   defp deps do
     [
-      {:flask, github: "alephtwo/flask", ref: "c77523a63cd11a73ff491bc2924f00bdbc53ce63"},
+      {:flask, github: "alephtwo/flask", ref: "984187bc391fb2d5b6fb6c75667c78eb1d76d3fc"},
       {:timex, "~> 3.0"},
       {:credo, "~> 0.4", only: [:dev, :test]},
-      {:tzdata, "== 0.1.8", override: true}, # Required for escript timex,
-      {:ecto, "~> 2.0"},
-      {:postgrex, "~> 0.12"}
+      {:tzdata, "== 0.1.8", override: true} # Required for escript timex,
     ]
   end
 end

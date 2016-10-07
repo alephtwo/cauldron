@@ -3,15 +3,6 @@ defmodule FlaskScraper do
   The main module of the FlaskScraper.
   """
   alias FlaskScraper.Scraper
-  use Application
-
-  # Allow us to use Ecto.
-  def start(_type, _args) do
-    import Supervisor.Spec
-    tree = [supervisor(FlaskScraper.Repo, [])]
-    options = [name: FlaskScraper.Sup, strategy: :one_for_one]
-    Supervisor.start_link(tree, options)
-  end
 
   def main(_args) do
     run(FlaskScraper.Item, 1..100)
