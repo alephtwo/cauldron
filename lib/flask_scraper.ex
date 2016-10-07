@@ -5,6 +5,7 @@ defmodule FlaskScraper do
   alias FlaskScraper.Scraper
 
   def main(_args) do
+    run(FlaskScraper.ItemSet, 1..100)
     run(FlaskScraper.Item, 1..100)
   end
 
