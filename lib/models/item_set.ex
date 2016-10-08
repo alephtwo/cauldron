@@ -4,7 +4,7 @@ defmodule FlaskScraper.ItemSet do
   """
   def desc, do: "item_set"
 
-  def get(id), do: Flask.item_set(id)
+  def request(id), do: Flask.item_set(id)
   def not_found do
     %{reason: "Unable to get item set information.", status: "nok"}
   end

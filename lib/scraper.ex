@@ -43,7 +43,7 @@ defmodule FlaskScraper.Scraper do
   defp process_subchunk(model, subchunk) when is_list(subchunk) do
     responses =
       subchunk
-        |> Enum.map(fn id -> %{id: id, item: model.get(id)} end)
+        |> Enum.map(fn id -> %{id: id, item: model.request(id)} end)
         |> Enum.map(fn item -> wrap_error(model, item) end)
 
     log_finds(model, responses)
