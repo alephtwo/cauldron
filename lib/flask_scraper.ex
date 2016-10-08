@@ -7,7 +7,7 @@ defmodule FlaskScraper do
 
   def main(_args) do
     run(FlaskScraper.ItemSet, 1..1_400)
-    # run(FlaskScraper.Item, 1..100)
+    run(FlaskScraper.Item, 1..175_000)
   end
 
   def run(model, range) do
