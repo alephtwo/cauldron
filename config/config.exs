@@ -6,16 +6,6 @@ config :flask_scraper,
   requests_per_second: 100,
   requests_per_hour: 36_000
 
-config :flask_scraper,
-  FlaskScraper.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "flask_scraper",
-  hostname: "localhost"
-
-config :flask_scraper, ecto_repos: [FlaskScraper.Repo]
-
 config :logger,
   level: :info
 
