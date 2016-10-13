@@ -1,6 +1,6 @@
-defmodule FlaskScraperTest do
+defmodule CauldronTest do
   use ExUnit.Case
-  doctest FlaskScraper
+  doctest Cauldron
 
   test "the truth" do
     assert 1 + 1 == 2

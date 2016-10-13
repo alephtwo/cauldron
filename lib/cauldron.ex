@@ -1,12 +1,12 @@
-defmodule FlaskScraper do
+defmodule Cauldron do
   @moduledoc """
-  The main module of the FlaskScraper.
+  The main module of the Cauldron.
   """
-  alias FlaskScraper.Scraper
+  alias Cauldron.Scraper
 
   def main(_args) do
-    run(FlaskScraper.ItemSet, 1..100)
-    run(FlaskScraper.Item, 1..100)
+    run(Cauldron.ItemSet, 1..100)
+    run(Cauldron.Item, 1..100)
   end
 
   def run(model, range) do
@@ -19,8 +19,8 @@ defmodule FlaskScraper do
     write_errors(model, faults)
   end
 
-  def rps, do: Application.get_env(:flask_scraper, :requests_per_second)
-  def rph, do: Application.get_env(:flask_scraper, :requests_per_hour)
+  def rps, do: Application.get_env(:cauldron, :requests_per_second)
+  def rph, do: Application.get_env(:cauldron, :requests_per_hour)
   def trps, do: div(rph, 3600)
   def gap_time, do: div(rps, trps)
 

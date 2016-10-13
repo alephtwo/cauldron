@@ -1,4 +1,4 @@
-defmodule FlaskScraper.Item do
+defmodule Cauldron.Item do
   @moduledoc """
   Models an Item from the Battle.net API.
   """

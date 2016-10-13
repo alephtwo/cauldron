@@ -1,4 +1,4 @@
-# FlaskScraper
+# Cauldron
 
 **TODO: Add description**
 
@@ -6,19 +6,19 @@
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
-  1. Add `flask_scraper` to your list of dependencies in `mix.exs`:
+  1. Add `cauldron` to your list of dependencies in `mix.exs`:
 
     ```elixir
     def deps do
-      [{:flask_scraper, "~> 0.1.0"}]
+      [{:cauldron, "~> 0.1.0"}]
     end
     ```
 
-  2. Ensure `flask_scraper` is started before your application:
+  2. Ensure `cauldron` is started before your application:
 
     ```elixir
     def application do
-      [applications: [:flask_scraper]]
+      [applications: [:cauldron]]
     end
     ```
 

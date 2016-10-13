@@ -1,4 +1,4 @@
-defmodule FlaskScraper.Scraper do
+defmodule Cauldron.Scraper do
   @moduledoc """
   A generic scraper that uses Flask.
   """
@@ -8,12 +8,12 @@ defmodule FlaskScraper.Scraper do
   def scrape(model, range) do
     {:ok, eta} =
       Timex.now
-      |> Timex.shift(seconds: div(Enum.count(range), FlaskScraper.trps))
+      |> Timex.shift(seconds: div(Enum.count(range), Cauldron.trps))
       |> Timex.format("{relative}", :relative)
     Logger.info "ETA: #{eta}"
 
     range
-      |> Enum.chunk(FlaskScraper.rps, FlaskScraper.rps, [])
+      |> Enum.chunk(Cauldron.rps, Cauldron.rps, [])
       |> Enum.map(fn chunk -> process_chunk(model, chunk) end)
       |> List.flatten
   end
@@ -31,7 +31,7 @@ defmodule FlaskScraper.Scraper do
       |> Duration.from_erl
       |> Duration.elapsed(start, :milliseconds)
 
-    rate_limit = (FlaskScraper.gap_time * 1000) - elapsed
+    rate_limit = (Cauldron.gap_time * 1000) - elapsed
     if rate_limit > 0 do
       Logger.debug "#{inspect(self)} sleeping for #{rate_limit}ms"
       :timer.sleep(rate_limit)
@@ -53,7 +53,7 @@ defmodule FlaskScraper.Scraper do
   # Split the chunk into a group for each thread to work on
   defp thread_groups(chunk) do
     chunk
-      |> Enum.group_by(fn x -> rem(x, FlaskScraper.trps) end)
+      |> Enum.group_by(fn x -> rem(x, Cauldron.trps) end)
       |> Enum.map(fn {_, t} -> t end)
   end
 
