@@ -1,11 +1,11 @@
-defmodule FlaskScraper.Item do
+defmodule Cauldron.Item do
   @moduledoc """
   Models an Item from the Battle.net API.
   """
   use Ecto.Schema
   require Logger
-  alias FlaskScraper.Repo
-  alias FlaskScraper.Item
+  alias Cauldron.Repo
+  alias Cauldron.Item
 
   @primary_key {:id, :id, autogenerate: false}
   schema "item" do

@@ -1,22 +1,22 @@
-defmodule FlaskScraper.Mixfile do
+defmodule Cauldron.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :flask_scraper,
+      app: :cauldron,
       version: "0.1.0",
       elixir: "~> 1.3",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       deps: deps(),
-      escript: [main_module: FlaskScraper]
+      escript: [main_module: Cauldron]
     ]
   end
 
   def application do
     [
       applications: [:logger, :flask, :timex, :ecto, :postgrex],
-      mod: {FlaskScraper, []}
+      mod: {Cauldron, []}
     ]
   end
 

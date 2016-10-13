@@ -2,16 +2,16 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :flask_scraper, FlaskScraper.Repo,
+config :cauldron, Cauldron.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "flask_scraper_repo",
+  database: "cauldron_repo",
   username: "postgres",
   password: "postgres",
   hostname: "localhost"
 
-config :flask_scraper, ecto_repos: [FlaskScraper.Repo]
+config :cauldron, ecto_repos: [Cauldron.Repo]
 
-config :flask_scraper,
+config :cauldron,
   requests_per_second: 100,
   requests_per_hour: 36_000
 

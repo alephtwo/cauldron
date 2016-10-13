@@ -1,4 +1,4 @@
-defmodule FlaskScraper.Repo.Migrations.CreateItemSet do
+defmodule Cauldron.Repo.Migrations.CreateItemSet do
   use Ecto.Migration
 
   def change do
