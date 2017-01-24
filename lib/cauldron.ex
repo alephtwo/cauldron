@@ -21,8 +21,8 @@ defmodule Cauldron do
 
   def rps, do: Application.get_env(:cauldron, :requests_per_second)
   def rph, do: Application.get_env(:cauldron, :requests_per_hour)
-  def trps, do: div(rph, 3600)
-  def gap_time, do: div(rps, trps)
+  def trps, do: div(rph(), 3600)
+  def gap_time, do: div(rps(), trps())
 
   defp write_scrapes(model, finds) do
     scrapes = Enum.map(finds, fn {:ok, i} -> i end)

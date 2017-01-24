@@ -19,10 +19,10 @@ defmodule Cauldron.Mixfile do
 
   defp deps do
     [
-      {:flask, github: "alephtwo/flask", ref: "984187bc391fb2d5b6fb6c75667c78eb1d76d3fc"},
-      {:timex, "~> 3.0"},
-      {:credo, "~> 0.4", only: [:dev, :test]},
-      {:tzdata, "== 0.1.8", override: true} # Required for escript timex,
+      {:flask, github: "alephtwo/flask", ref: "f5978443d404d095f327a6b91312ce528cac14d1"},
+      {:timex, "~> 3.1.8"},
+      {:credo, "~> 0.6", only: [:dev, :test]},
+      {:tzdata, "== 0.5.10", override: true} # Required for escript timex,
     ]
   end
 end

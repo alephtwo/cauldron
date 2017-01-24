@@ -33,7 +33,7 @@ defmodule Cauldron.Scraper do
 
     rate_limit = (Cauldron.gap_time * 1000) - elapsed
     if rate_limit > 0 do
-      Logger.debug "#{inspect(self)} sleeping for #{rate_limit}ms"
+      Logger.debug "#{inspect(self())} sleeping for #{rate_limit}ms"
       :timer.sleep(rate_limit)
     end
 
@@ -70,7 +70,7 @@ defmodule Cauldron.Scraper do
     responses
       |> Enum.filter(fn {sym, _} -> sym == :ok end)
       |> Enum.map(fn {:ok, item} -> model.describe(item) end)
-      |> Enum.map(fn s -> "#{inspect(self)} #{s}" end)
+      |> Enum.map(fn s -> "#{inspect(self())} #{s}" end)
       |> Enum.each(&Logger.info(&1))
   end
 end
