@@ -16,8 +16,8 @@ defmodule Cauldron do
 
   def rps, do: Application.get_env(:cauldron, :requests_per_second)
   def rph, do: Application.get_env(:cauldron, :requests_per_hour)
-  def trps, do: div(rph, 3600)
-  def gap_time, do: div(rps, trps)
+  def trps, do: div(rph(), 3600)
+  def gap_time, do: div(rps(), trps())
 
   # Let us use Ecto.
   def start(_type, _args) do

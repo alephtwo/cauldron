@@ -10,13 +10,13 @@ defmodule Cauldron.ItemSet do
   @primary_key {:id, :id, autogenerate: false}
   schema "item_set" do
     field :name, :string, size: 512
-    timestamps
+    timestamps()
   end
 
   def request(id), do: Flask.item_set(id)
   def insert_row({:error, _}), do: "" # TODO implement this
   def insert_row({:ok, set}) do
-    Logger.info "#{inspect(self)} #{set[:id]} - #{set[:name]}"
+    Logger.info "#{inspect(self())} #{set[:id]} - #{set[:name]}"
     Repo.insert %ItemSet{id: set[:id], name: set[:name]}
   end
 end

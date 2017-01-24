@@ -31,7 +31,7 @@ defmodule Cauldron.Scraper do
 
     rate_limit = (Cauldron.gap_time * 1000) - elapsed
     if rate_limit > 0 do
-      Logger.debug "#{inspect(self)} sleeping for #{rate_limit}ms"
+      Logger.debug "#{inspect(self())} sleeping for #{rate_limit}ms"
       :timer.sleep(rate_limit)
     end
   end
