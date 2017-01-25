@@ -18,4 +18,5 @@ config :cauldron,
 config :logger,
   level: :info
 
-import_config "secrets.exs"
+config :flask,
+  api_key: System.get_env("BNET_API_KEY")
