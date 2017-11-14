@@ -1,6 +1,6 @@
 defmodule Cauldron.Scraper do
   @moduledoc """
-  A generic scraper that uses Flask.
+  A generic scraper that uses Flask.
   """
   use Timex
   require Logger
